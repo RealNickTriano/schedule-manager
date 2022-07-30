@@ -25,9 +25,7 @@ const Day = () => {
             <h1>July 25</h1>
         </div>
         <div className='flex flex-col justify-center items-center pt-4 pb-10 px-4'>
-            <h1 className='font-bold bg-gray-300 rounded-full px-8'>Dinner</h1>
             <h1 className=''>4:00PM - 10:00PM</h1>
-            <h1 className=''>Open</h1>
             <h1 className=''>{`(Server)`}</h1>
         </div>
         <DayTooltip 

@@ -5,7 +5,6 @@ const DayTooltip = ({ display, mouseX, mouseY }) => {
     const box = useRef(null);
 
     useEffect(() => {
-        console.log(box)
         if (box.current && box.current.clientHeight)
         {
             setHeight(box.current.clientHeight)
