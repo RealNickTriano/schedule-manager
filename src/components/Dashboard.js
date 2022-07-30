@@ -31,14 +31,6 @@ const Dashboard = () => {
         }
     };
 
-    const fetchSchedule = async () => {
-        try {
-            
-        } catch (error) {
-            
-        }
-    }
-
     const getFirstDayThisWeek = () => {
         const todayDate = new Date()
         const today = todayDate.getDay()
@@ -54,7 +46,6 @@ const Dashboard = () => {
         if (!user) return navigate("/login");
         fetchUserName();
         setFirstDay(getFirstDayThisWeek())
-        fetchSchedule();
     }, [user, loading]);
 
     return (
@@ -92,6 +83,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                     <ScheduleWeek 
+                        user={user}
                         startDay={firstDay.getTime()}
                     />
             </div>
