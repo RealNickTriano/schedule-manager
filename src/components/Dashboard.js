@@ -6,13 +6,17 @@ import { query, collection, getDocs, where } from "firebase/firestore";
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
 import Day from './Day';
 import { FcGoogle } from "react-icons/fc";
+import { async } from "@firebase/util";
+import ScheduleWeek from "./ScheduleWeek";
 
 const Dashboard = () => {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [photo, setPhoto] = useState("");
+    const [firstDay, setFirstDay] = useState(new Date());
     const navigate = useNavigate();
+
     const fetchUserName = async () => {
         try {
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
@@ -27,10 +31,30 @@ const Dashboard = () => {
         }
     };
 
+    const fetchSchedule = async () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+    const getFirstDayThisWeek = () => {
+        const todayDate = new Date()
+        const today = todayDate.getDay()
+        let startDate = new Date()
+        for (let i = 0; i < today; i++) {
+            startDate = new Date(startDate.getTime() - 60 * 60 * 24 *1000) 
+        }
+        return startDate
+    }
+
     useEffect(() => {
         if (loading) return;
         if (!user) return navigate("/login");
         fetchUserName();
+        setFirstDay(getFirstDayThisWeek())
+        fetchSchedule();
     }, [user, loading]);
 
     return (
@@ -67,17 +91,12 @@ const Dashboard = () => {
                         </button>
                     </div>
                 </div>
-                <div className='flex justify-center items-center gap-2 p-8'>
-                    <Day />
-                    <Day />
-                    <Day />
-                    <Day />
-                    <Day />
-                    <Day />
-                    <Day />
-                </div>
+                    <ScheduleWeek 
+                        startDay={firstDay.getTime()}
+                    />
             </div>
-    </div>
+            
+        </div>
     );
 }
 export default Dashboard;
