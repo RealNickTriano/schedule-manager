@@ -41,7 +41,7 @@ const Dashboard = () => {
                     <div className="flex justify-center items-center gap-2 font-medium">
                         <img 
                             src={photo} alt="profile_picture"
-                            className="rounded-full w-14 border-2 border-blue-500"
+                            className="rounded-full w-14 border-4 border-white shadow-lg"
                         />
                         <div className="flex flex-col justify-center items-start">
                             <h1>{name}</h1>
