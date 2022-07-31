@@ -92,7 +92,6 @@ const Dashboard = () => {
             newStartDaysArray.push(prevDate)
             newStartDaysArray.push(currentDate)
             newStartDaysArray.push(nextDate)
-            console.log(newStartDaysArray)
             setStartDays(newStartDaysArray)
             setWeekAnimation('')
         }, 500);   

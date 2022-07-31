@@ -23,7 +23,6 @@ const ScheduleWeek = ({ startDay, user }) => {
             day = new Date(day.getTime() + 60 * 60 * 24 * 1000)
             myDays.push(day)
         }  
-        console.log(myDays)
         setDays(myDays)
         fetchTimes(myDays)
       
