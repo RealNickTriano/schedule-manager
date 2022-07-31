@@ -16,6 +16,7 @@ const Dashboard = () => {
     const [photo, setPhoto] = useState("");
     const [firstDay, setFirstDay] = useState(new Date());
     const [startDays, setStartDays] = useState(Array(3).fill(null));
+    const [weekAnimation, setWeekAnimation] = useState('');
     const navigate = useNavigate();
 
     const fetchUserName = async () => {
@@ -60,32 +61,41 @@ const Dashboard = () => {
     }, [user, loading]);
 
     const onArrowLeft = () => {
-        const oldStartDaysArray = startDays
-        const newStartDaysArray = []
+        setWeekAnimation('slideRight')
+        setTimeout(() => {
+            const oldStartDaysArray = startDays
+            const newStartDaysArray = []
 
-        const currentDate = oldStartDaysArray[0]
-        const prevDate = new Date(currentDate.getTime() - (60 * 60 * 24 * 1000 * 7))
-        const nextDate = oldStartDaysArray[1]
+            const currentDate = oldStartDaysArray[0]
+            const prevDate = new Date(currentDate.getTime() - (60 * 60 * 24 * 1000 * 7))
+            const nextDate = oldStartDaysArray[1]
 
-        newStartDaysArray.push(prevDate)
-        newStartDaysArray.push(currentDate)
-        newStartDaysArray.push(nextDate)
-        setStartDays(newStartDaysArray)
+            newStartDaysArray.push(prevDate)
+            newStartDaysArray.push(currentDate)
+            newStartDaysArray.push(nextDate)
+            setStartDays(newStartDaysArray)
+            setWeekAnimation('')
+        }, 500);
     }
 
     const onArrowRight = () => {
-        const oldStartDaysArray = startDays
-        const newStartDaysArray = []
+        setWeekAnimation('slideLeft')
 
-        const currentDate = oldStartDaysArray[2]
-        const prevDate = oldStartDaysArray[1]
-        const nextDate = new Date(currentDate.getTime() + (60 * 60 * 24 * 1000 * 7))
-        
-        newStartDaysArray.push(prevDate)
-        newStartDaysArray.push(currentDate)
-        newStartDaysArray.push(nextDate)
-        console.log(newStartDaysArray)
-        setStartDays(newStartDaysArray)
+        setTimeout(() => {
+            const oldStartDaysArray = startDays
+            const newStartDaysArray = []
+
+            const currentDate = oldStartDaysArray[2]
+            const prevDate = oldStartDaysArray[1]
+            const nextDate = new Date(currentDate.getTime() + (60 * 60 * 24 * 1000 * 7))
+            
+            newStartDaysArray.push(prevDate)
+            newStartDaysArray.push(currentDate)
+            newStartDaysArray.push(nextDate)
+            console.log(newStartDaysArray)
+            setStartDays(newStartDaysArray)
+            setWeekAnimation('')
+        }, 500);   
     }
 
     return (
@@ -127,18 +137,24 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <div className="flex justify-center items-center gap-5 w-[1200px] overflow-x-hidden mt-5 mx-5 h-64">
-                    {
-                        startDays.map((item, index) => {
-                            return (
-                                <ScheduleWeek 
-                                    key={index}
-                                    user={user}
-                                    startDay={item}
-                                />
-                            )
-                        })
-                    }
+                <div
+                    className="flex justify-center items-center w-[1200px] overflow-x-hidden mt-5 mx-5 h-64">
+                    <div 
+                        className="flex justify-center items-center gap-5"
+                        style={{animationName: weekAnimation, animationDuration: '0.5s'}} 
+                    >
+                        {
+                            startDays.map((item, index) => {
+                                return (
+                                    <ScheduleWeek 
+                                        key={index}
+                                        user={user}
+                                        startDay={item}
+                                    />
+                                )
+                            })
+                        }
+                    </div>
                 </div>
 
             </div>

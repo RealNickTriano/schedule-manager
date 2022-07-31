@@ -11,9 +11,20 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
+  transition: all linear;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@keyframes slideLeft {
+  0% { transform: translate(0px) }
+  100% { transform: translate(-1180px) }
+}
+
+@keyframes slideRight {
+  0% { transform: translate(0px) }
+  100% { transform: translate(1180px) }
 }
