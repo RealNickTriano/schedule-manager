@@ -49,7 +49,7 @@ const Day = ({ dayName, monthName, dayNumber, position, timeStart, timeEnd }) =>
       onMouseLeave={(e) => {
         setDisplayTip(false)
       }}
-      className='flex flex-col justify-center items-center text-center bg-white rounded-xl shadow-md'
+      className={`flex flex-col justify-start items-center text-center bg-white rounded-xl shadow-md ${dayNumber === new Date().getDate() && monthName === new Date().getMonth() ? 'mb-12 bg-blue-200' : ''}`}
       style={{minWidth: '10rem', minHeight: '10rem'}} 
     >
         <div className='border-b-2 border-blue-500 w-1/2'>
