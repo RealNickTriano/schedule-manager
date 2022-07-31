@@ -15,6 +15,7 @@ const Dashboard = () => {
     const [email, setEmail] = useState("");
     const [photo, setPhoto] = useState("");
     const [firstDay, setFirstDay] = useState(new Date());
+    const [startDays, setStartDays] = useState(Array(3).fill(null));
     const navigate = useNavigate();
 
     const fetchUserName = async () => {
@@ -44,9 +45,48 @@ const Dashboard = () => {
     useEffect(() => {
         if (loading) return;
         if (!user) return navigate("/login");
+        const startDaysArray = []
         fetchUserName();
         setFirstDay(getFirstDayThisWeek())
+
+        const currentDate = getFirstDayThisWeek()
+        const prevDate = new Date(currentDate.getTime() - (60 * 60 * 24 * 1000 * 7))
+        const nextDate = new Date(currentDate.getTime() + (60 * 60 * 24 * 1000 * 7))
+        startDaysArray.push(prevDate)
+        startDaysArray.push(currentDate)
+        startDaysArray.push(nextDate)
+        setStartDays(startDaysArray)
+
     }, [user, loading]);
+
+    const onArrowLeft = () => {
+        const oldStartDaysArray = startDays
+        const newStartDaysArray = []
+
+        const currentDate = oldStartDaysArray[0]
+        const prevDate = new Date(currentDate.getTime() - (60 * 60 * 24 * 1000 * 7))
+        const nextDate = oldStartDaysArray[1]
+
+        newStartDaysArray.push(prevDate)
+        newStartDaysArray.push(currentDate)
+        newStartDaysArray.push(nextDate)
+        setStartDays(newStartDaysArray)
+    }
+
+    const onArrowRight = () => {
+        const oldStartDaysArray = startDays
+        const newStartDaysArray = []
+
+        const currentDate = oldStartDaysArray[2]
+        const prevDate = oldStartDaysArray[1]
+        const nextDate = new Date(currentDate.getTime() + (60 * 60 * 24 * 1000 * 7))
+        
+        newStartDaysArray.push(prevDate)
+        newStartDaysArray.push(currentDate)
+        newStartDaysArray.push(nextDate)
+        console.log(newStartDaysArray)
+        setStartDays(newStartDaysArray)
+    }
 
     return (
         <div className='flex flex-col justify-center items-center min-h-screen'>
@@ -74,18 +114,33 @@ const Dashboard = () => {
                 <div className='bg-blue-400 flex justify-between items-center w-full py-2 px-5'>
                     <h1 className='font-bold text-xl'>Your Schedule</h1>
                     <div className='flex justify-center items-center gap-2'>
-                        <button>
+                        <button
+                            onClick={onArrowLeft}
+                        >
                             <FaAngleDoubleLeft size={25}/>
                         </button>
-                        <button>
+                        <button
+                            onClick={onArrowRight}
+                        >
                             <FaAngleDoubleRight size={25}/>
                         </button>
                     </div>
                 </div>
-                    <ScheduleWeek 
-                        user={user}
-                        startDay={firstDay.getTime()}
-                    />
+
+                <div className="flex justify-center items-center gap-5 w-[1200px] overflow-x-hidden mt-5 mx-5 h-64">
+                    {
+                        startDays.map((item, index) => {
+                            return (
+                                <ScheduleWeek 
+                                    key={index}
+                                    user={user}
+                                    startDay={item}
+                                />
+                            )
+                        })
+                    }
+                </div>
+
             </div>
             
         </div>

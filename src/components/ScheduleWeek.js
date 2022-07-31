@@ -14,18 +14,20 @@ const ScheduleWeek = ({ startDay, user }) => {
     const [details, setDetails] = useState([])
 
     useEffect(() => {
-      const myDays = []
-      const myDeats = []
-      myDays.push(new Date(startDay))
-      let day = new Date(startDay)
-      for (let i = 0; i < 6; i++) {
-        day = new Date(day.getTime() + 60 * 60 * 24 * 1000)
-        myDays.push(day)
-      }  
-      setDays(myDays)
-      fetchTimes(myDays)
+        if (!startDay) return
+        const myDays = []
+        const myDeats = []
+        myDays.push(startDay)
+        let day = startDay
+        for (let i = 0; i < 6; i++) {
+            day = new Date(day.getTime() + 60 * 60 * 24 * 1000)
+            myDays.push(day)
+        }  
+        console.log(myDays)
+        setDays(myDays)
+        fetchTimes(myDays)
       
-    }, [])
+    }, [startDay])
 
     const fetchTimes = async (myDays) => {
         const myDeats =[]
@@ -35,7 +37,10 @@ const ScheduleWeek = ({ startDay, user }) => {
             const doc = await getDocs(q);
             const data = doc.docs[0].data();
             myDays.forEach((item1, index) => {
-                const result = data.schedule.find(item => new Date(item.timeStart.seconds * 1000).getDate() === item1.getDate())
+                const result = data.schedule.find(item => 
+                    (new Date(item.timeStart.seconds * 1000).getDate() === item1.getDate())
+                    && (new Date(item.timeStart.seconds * 1000).getMonth() === item1.getMonth())
+                    && (new Date(item.timeStart.seconds * 1000).getFullYear() === item1.getFullYear()))
                 myDeats.push(result)
             })
             setDetails(myDeats)
@@ -46,10 +51,9 @@ const ScheduleWeek = ({ startDay, user }) => {
     }
     
   return (
-    <div className='flex justify-center items-center gap-2 p-8'>
+    <div className='flex justify-center items-center gap-2'>
         {
             days.map((item, index) => {
-                console.log(details)
                 return (
                     <Day 
                         key={index}
