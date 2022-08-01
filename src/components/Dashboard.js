@@ -7,6 +7,7 @@ import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import ScheduleWeek from "./ScheduleWeek";
 import Navbar from "./Navbar";
+import AvailabilityCard from "./AvailabilityCard";
 
 const Dashboard = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -155,8 +156,8 @@ const Dashboard = () => {
                         />
                     </div>
                 </div>
-
             </div>
+            <AvailabilityCard />
             
         </div>
     </>

@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Teams from "./components/Teams";
 import Calendar from "./components/Calendar";
 import Manage from "./components/Manage";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='team' element={<Teams />} />
         <Route path='calendar' element={<Calendar />} />
         <Route path='manage' element={<Manage />} />
+        <Route path='profile' element={<Profile />} />
       </Routes>
     </div>
   );
