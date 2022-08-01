@@ -1,8 +1,10 @@
 import { Routes, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
-import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import Navbar from "./components/Navbar";
+import Teams from "./components/Teams";
+import Calendar from "./components/Calendar";
+import Manage from "./components/Manage";
 
 function App() {
   return (
@@ -12,6 +14,9 @@ function App() {
         <Route path='/' element={<Login />} />
         <Route path='login' element={<Login />} />
         <Route path='dashboard' element={<Dashboard />} />
+        <Route path='team' element={<Teams />} />
+        <Route path='calendar' element={<Calendar />} />
+        <Route path='manage' element={<Manage />} />
       </Routes>
     </div>
   );
