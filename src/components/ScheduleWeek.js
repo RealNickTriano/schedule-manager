@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import Day from './Day'
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-const ScheduleWeek = ({ startDay, user }) => {
+const ScheduleWeek = ({ startDay }) => {
 
     /**
      * Takes a startDay (Sunday) and displays Day componenets for the week
      * including startDay, so Sun-Sat
      */
+
+    const [user, loading, error] = useAuthState(auth);
 
     const [days, setDays] = useState([])
     const [details, setDetails] = useState([])
@@ -32,7 +35,7 @@ const ScheduleWeek = ({ startDay, user }) => {
         const myDeats =[]
 
         try {
-            const q = query(collection(db, "testOrg"), where("uid", "==", 'Hj9Y0kISYUVzV9paVjaDWp4yfdI2'));
+            const q = query(collection(db, "testOrg"), where("uid", "==", user?.uid));
             const doc = await getDocs(q);
             const data = doc.docs[0].data();
             myDays.forEach((item1, index) => {

@@ -4,9 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { auth, db, logout } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
-import Day from './Day';
 import { FcGoogle } from "react-icons/fc";
-import { async } from "@firebase/util";
 import ScheduleWeek from "./ScheduleWeek";
 
 const Dashboard = () => {
@@ -104,6 +102,7 @@ const Dashboard = () => {
                 <div className="flex justify-between items-center w-full px-5 py-2">
                     <div className="flex justify-center items-center gap-2 font-medium">
                         <img 
+                            referrerPolicy="no-referrer"
                             src={photo} alt="profile_picture"
                             className="rounded-full w-14 border-4 border-white shadow-lg"
                         />
@@ -142,17 +141,15 @@ const Dashboard = () => {
                         className="flex justify-center items-center gap-5"
                         style={{animationName: weekAnimation, animationDuration: '0.5s'}} 
                     >
-                        {
-                            startDays.map((item, index) => {
-                                return (
-                                    <ScheduleWeek 
-                                        key={index}
-                                        user={user}
-                                        startDay={item}
-                                    />
-                                )
-                            })
-                        }
+                        <ScheduleWeek 
+                            startDay={startDays[0]}
+                        />
+                        <ScheduleWeek 
+                            startDay={startDays[1]}
+                        />
+                        <ScheduleWeek 
+                            startDay={startDays[2]}
+                        />
                     </div>
                 </div>
 
