@@ -6,6 +6,7 @@ import { query, collection, getDocs, where } from "firebase/firestore";
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import ScheduleWeek from "./ScheduleWeek";
+import Navbar from "./Navbar";
 
 const Dashboard = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -96,6 +97,8 @@ const Dashboard = () => {
     }
 
     return (
+        <>
+        <Navbar />
         <div className='flex flex-col justify-center items-center min-h-screen'>
             <h1 className="text-3xl text-blue-500 text-center font-bold">Welcome, {name}!</h1>
             <div className='flex flex-col justify-center items-start bg-gray-200 rounded-lg shadow-lg mt-12'>
@@ -156,6 +159,7 @@ const Dashboard = () => {
             </div>
             
         </div>
+    </>
     );
 }
 export default Dashboard;

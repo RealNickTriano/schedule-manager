@@ -1,8 +1,12 @@
 import React from 'react'
+import Navbar from './Navbar'
 
 const Teams = () => {
   return (
-    <h1 className='text-3xl font-bold text-center'>TEAMS</h1>
+    <>
+        <Navbar />
+        <h1 className='text-3xl font-bold text-center'>TEAMS</h1>
+    </>
   )
 }
 

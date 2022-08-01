@@ -9,7 +9,6 @@ import Manage from "./components/Manage";
 function App() {
   return (
     <div className="">
-      <Navbar />
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='login' element={<Login />} />
