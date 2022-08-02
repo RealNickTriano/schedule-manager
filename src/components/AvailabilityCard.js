@@ -9,7 +9,7 @@ const AvailabilityCard = () => {
             <h1 className='font-bold text-xl'>Your Availabilty</h1>
         </div>
         <div
-            className="flex justify-around items-center w-[1200px] overflow-x-hidden mt-5 mx-5 h-64">
+            className="flex justify-around items-start w-[1200px] mt-5 mx-5 h-64">
                 <AvailabilityDisplay 
                     dayName={'Sunday'}
                     isAvailable={true}

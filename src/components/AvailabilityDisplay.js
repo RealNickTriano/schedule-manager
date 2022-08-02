@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FcCheckmark, FcCancel } from "react-icons/fc";
+import TimeDropDown from './TimeDropDown';
 
 const AvailabilityDisplay = ({ dayName, isAvailable, timeStart, timeEnd }) => {
+
+  const [showFrom, setShowFrom] = useState(false)
+  const [showTo, setShowTo] = useState(false)
 
   const DisplayTime = (date) => {
     let output = ''
@@ -29,7 +33,28 @@ const AvailabilityDisplay = ({ dayName, isAvailable, timeStart, timeEnd }) => {
         <h1 className='font-medium text-xl'>{dayName}</h1>
         <h1 className={`text-md font-bold ${isAvailable ? 'text-green-600' : 'text-red-500'}`}>{isAvailable ? 'Available' : 'Unavailable'}</h1>
         { isAvailable &&
-          <h1 className='font-medium'>{timeStart && DisplayTime(timeStart)} - {timeStart &&DisplayTime(timeEnd)}</h1>
+          <div className='flex flex-col justify-center items-center text-lg'>
+            <div className='flex justify-center items-center gap-2 relative text-lg font-medium'>
+              <h1>From:</h1>
+              <button
+                onClick={() => setShowFrom(!showFrom)}
+              >9:00 am</button>
+              <TimeDropDown 
+                showTimeMenu={showFrom}
+              />
+            </div>
+
+            <div className='flex justify-center items-center gap-2 relative text-lg font-medium'>
+              <h1>To:</h1>
+              <button
+                onClick={() => setShowTo(!showTo)}
+              >5:00 pm</button>
+              <TimeDropDown 
+                showTimeMenu={showTo}
+              />
+            </div>
+          </div>
+            
         }
     </div>
   )

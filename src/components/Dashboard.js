@@ -101,7 +101,7 @@ const Dashboard = () => {
         <>
         <Navbar />
         <div className='flex flex-col justify-center items-center min-h-screen'>
-            <h1 className="text-3xl text-blue-500 text-center font-bold">Welcome, {name}!</h1>
+            <h1 className="text-3xl text-indigo-600 text-center font-bold">Welcome, {name}!</h1>
             <div className='flex flex-col justify-center items-start bg-gray-800 rounded-lg shadow-lg mt-12 pt-5'>
                 {/* <div className="flex justify-between items-center w-full px-5 py-2">
                     <div className="flex justify-center items-center gap-2 font-medium">
