@@ -4,8 +4,8 @@ import AvailabilityDisplay from './AvailabilityDisplay'
 const AvailabilityCard = () => {
 
   return (
-    <div className='flex flex-col justify-center items-start bg-gray-200 rounded-lg shadow-lg mt-12 pt-5'>
-        <div className='bg-blue-400 flex justify-between items-center w-full py-2 px-5'>
+    <div className='flex flex-col justify-center items-start bg-gray-800 rounded-lg shadow-lg mt-12 pt-5'>
+        <div className='bg-indigo-600 flex justify-between items-center w-full py-2 px-5'>
             <h1 className='font-bold text-xl'>Your Availabilty</h1>
         </div>
         <div

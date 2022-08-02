@@ -9,7 +9,7 @@ import Profile from "./components/Profile";
 
 function App() {
   return (
-    <div className="">
+    <div className="bg-gray-900">
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='login' element={<Login />} />

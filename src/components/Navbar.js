@@ -15,13 +15,13 @@ const Navbar = () => {
         {
             setMenuAnimation('animate-leaving')
             setTimeout(() => {
-                setProfileMenu(!showProfileMenu)
+                setProfileMenu(false)
             }, 70);
         }
         else if(!showProfileMenu)
         {
             setMenuAnimation('animate-entering')
-            setProfileMenu(!showProfileMenu)
+            setProfileMenu(true)
         }
 
         
@@ -99,7 +99,7 @@ const Navbar = () => {
                     <div className='flex justify-center items-center gap-2'>
                         <button 
                             onBlur={ () => setTimeout(() => {
-                                handleMenuChange()
+                                if(showProfileMenu) handleMenuChange()
                             }, 50)
                                 }
                             type="button" onClick={handleMenuChange}

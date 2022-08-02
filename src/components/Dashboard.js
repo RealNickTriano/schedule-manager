@@ -102,8 +102,8 @@ const Dashboard = () => {
         <Navbar />
         <div className='flex flex-col justify-center items-center min-h-screen'>
             <h1 className="text-3xl text-blue-500 text-center font-bold">Welcome, {name}!</h1>
-            <div className='flex flex-col justify-center items-start bg-gray-200 rounded-lg shadow-lg mt-12'>
-                <div className="flex justify-between items-center w-full px-5 py-2">
+            <div className='flex flex-col justify-center items-start bg-gray-800 rounded-lg shadow-lg mt-12 pt-5'>
+                {/* <div className="flex justify-between items-center w-full px-5 py-2">
                     <div className="flex justify-center items-center gap-2 font-medium">
                         <img 
                             referrerPolicy="no-referrer"
@@ -122,8 +122,8 @@ const Dashboard = () => {
                         <FcGoogle size={25}/>
                         <span>Sign Out</span>
                     </button>
-                </div>
-                <div className='bg-blue-400 flex justify-between items-center w-full py-2 px-5'>
+                </div> */}
+                <div className='bg-indigo-600 flex justify-between items-center w-full py-2 px-5'>
                     <h1 className='font-bold text-xl'>Your Schedule</h1>
                     <div className='flex justify-center items-center gap-2'>
                         <button

@@ -49,10 +49,10 @@ const Day = ({ dayName, monthName, dayNumber, position, timeStart, timeEnd }) =>
       onMouseLeave={(e) => {
         setDisplayTip(false)
       }}
-      className={`hover:cursor-pointer flex flex-col justify-start items-center text-center bg-white rounded-xl shadow-md ${dayNumber === new Date().getDate() && monthName === new Date().getMonth() ? 'mb-12 bg-blue-200' : ''}`}
+      className={`hover:cursor-pointer flex flex-col justify-start items-center text-center text-white bg-gray-900 rounded-xl shadow-md ${dayNumber === new Date().getDate() && monthName === new Date().getMonth() ? 'mb-12 bg-blue-200' : ''}`}
       style={{minWidth: '10rem', minHeight: '12rem'}} 
     >
-        <div className='border-b-2 border-blue-500 w-3/4 pb-2'>
+        <div className='border-b-2 border-indigo-600 w-3/4 pb-2'>
             <h1 className='font-bold'>{daysOfWeek[dayName]}</h1>
             <h1>{months[monthName]} {dayNumber}</h1>
         </div>
