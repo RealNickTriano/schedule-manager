@@ -46,6 +46,7 @@ const signInWithGoogle = async () => {
         authProvider: "google",
         email: user.email,
         photo: user.photoURL,
+        orgs: []
       });
     }
   } catch (err) {
@@ -62,8 +63,9 @@ const logout = async () => {
 
 // Gets user's schedule for org
 // Params: orgName = name of organization, days = array of days of current week, userId = user's id
+// Return: array of dates that equal the array of input dates
 const getUserScheduleForOrg = async (userId, orgName, days) => {
-  const myDeats =[]
+  const myDeats = []
 
   try {
       const q = query(collection(db, orgName), where("uid", "==", userId));
@@ -79,6 +81,82 @@ const getUserScheduleForOrg = async (userId, orgName, days) => {
       return myDeats
       } catch (error) {
       console.log(error)
+  }
+}
+
+// Gets user's availability for org
+// Params: orgName = name of organization, userId = user's id
+// Return: array of dates indexed 0-6 for days of week, (0 = Sunday)
+const getUserAvailabilityForOrg = async (userId, orgName) => {
+  const availability = []
+
+  try {
+      const q = query(collection(db, orgName), where("uid", "==", userId));
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      availability = data.availability
+      return availability
+      } catch (error) {
+      console.log(error)
+  }
+}
+
+// Get organizations that user belongs to
+// Params: userId = user's id
+// Return: array of org names
+const getOrgsForUser = async (userId) => {
+  const orgs = []
+
+  try {
+      const q = query(collection(db, 'users'), where("uid", "==", userId));
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      orgs = data.orgs
+      return orgs
+      } catch (error) {
+      console.log(error)
+  }
+}
+
+// Get user's role
+// Params: orgName = name of organization, userId = user's id
+// Return: String : user's role
+const getUserRoleFromOrg = async (userId, orgName) => {
+  let role = ''
+
+  try {
+      const q = query(collection(db, orgName), where("uid", "==", userId));
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      role = data.role
+      return role
+      } catch (error) {
+      console.log(error)
+  }
+}
+
+// Creates a new organization in the database
+// Params: orgName = name of organization, userId = user's id (this will be the owner of the org)
+// Return: boolean : whethere create succeeded
+const createNewOrg = async (userId, orgName) => {
+
+  try {
+    const q = query(collection(db, orgName));
+    const docs = await getDocs(q);
+    if (docs.docs.length === 0) {
+      await addDoc(collection(db, orgName), {
+        uid: userId,
+        role: 'owner',
+        availability: [],
+        schedule: [],
+      });
+    } else {
+      return false
+    }
+    return true
+      } catch (error) {
+      console.log(error)
+      return false
   }
 }
 
