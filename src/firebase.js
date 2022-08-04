@@ -58,9 +58,34 @@ const logout = async () => {
   signOut(auth);
 };
 
+// Database functions
+
+// Gets user's schedule for org
+// Params: orgName = name of organization, days = array of days of current week, userId = user's id
+const getUserScheduleForOrg = async (userId, orgName, days) => {
+  const myDeats =[]
+
+  try {
+      const q = query(collection(db, orgName), where("uid", "==", userId));
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      days.forEach((item1, index) => {
+          const result = data.schedule.find(item => 
+              (new Date(item.timeStart.seconds * 1000).getDate() === item1.getDate())
+              && (new Date(item.timeStart.seconds * 1000).getMonth() === item1.getMonth())
+              && (new Date(item.timeStart.seconds * 1000).getFullYear() === item1.getFullYear()))
+          myDeats.push(result)
+      })
+      return myDeats
+      } catch (error) {
+      console.log(error)
+  }
+}
+
 export {
     auth,
     db,
     signInWithGoogle,
     logout,
+    getUserScheduleForOrg,
 }

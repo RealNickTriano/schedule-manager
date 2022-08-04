@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Day from './Day'
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { auth, db, getUserScheduleForOrg } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const ScheduleWeek = ({ startDay }) => {
@@ -32,24 +32,8 @@ const ScheduleWeek = ({ startDay }) => {
     }, [startDay])
 
     const fetchTimes = async (myDays) => {
-        const myDeats =[]
-
-        try {
-            const q = query(collection(db, "testOrg"), where("uid", "==", user?.uid));
-            const doc = await getDocs(q);
-            const data = doc.docs[0].data();
-            myDays.forEach((item1, index) => {
-                const result = data.schedule.find(item => 
-                    (new Date(item.timeStart.seconds * 1000).getDate() === item1.getDate())
-                    && (new Date(item.timeStart.seconds * 1000).getMonth() === item1.getMonth())
-                    && (new Date(item.timeStart.seconds * 1000).getFullYear() === item1.getFullYear()))
-                myDeats.push(result)
-            })
-            setDetails(myDeats)
-            } catch (error) {
-            console.log(error)
-        }
-
+       const myArray = await getUserScheduleForOrg(user?.uid, 'testOrg', myDays)
+       setDetails(myArray)
     }
     
   return (
