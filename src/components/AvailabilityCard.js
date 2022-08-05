@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { auth, getUserAvailabilityForOrg } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 import AvailabilityDisplay from './AvailabilityDisplay'
 
-const AvailabilityCard = () => {
+const AvailabilityCard = ({ }) => {
+
+    const [user, loading, error] = useAuthState(auth);
+    const [availability, setAvailability] = useState([])
+
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+    useEffect(() => {
+        if (!user) return
+        fetchAvailability()
+
+    }, [user])
+    
+    const fetchAvailability = async () => {
+        const myArray = await getUserAvailabilityForOrg(user?.uid, 'testOrg')
+        setAvailability(myArray)
+        console.log(myArray)
+     }
 
   return (
     <div className='flex flex-col justify-center items-start bg-gray-800 rounded-lg shadow-lg mt-12 pt-5'>
@@ -10,48 +29,19 @@ const AvailabilityCard = () => {
         </div>
         <div
             className="flex justify-around items-start w-[1200px] mt-5 mx-5 h-64">
-                <AvailabilityDisplay 
-                    dayName={'Sunday'}
-                    isAvailable={true}
-                    timeStart={new Date()}
-                    timeEnd={new Date(new Date().getTime() + 60 * 60 * 6 * 1000)}
-                />
-                <AvailabilityDisplay 
-                    dayName={'Monday'}
-                    isAvailable={true}
-                    /* timeStart={''}
-                    timeEnd={''} */
-                />
-                <AvailabilityDisplay 
-                    dayName={'Tuesday'}
-                    isAvailable={true}
-                    /* timeStart={''}
-                    timeEnd={''} */
-                />
-                <AvailabilityDisplay 
-                    dayName={'Wednesday'}
-                    isAvailable={true}
-                    /* timeStart={''}
-                    timeEnd={''} */
-                />
-                <AvailabilityDisplay 
-                    dayName={'Thursday'}
-                    isAvailable={true}
-                    /* timeStart={''}
-                    timeEnd={''} */
-                />
-                <AvailabilityDisplay 
-                    dayName={'Friday'}
-                    isAvailable={true}
-                    /* timeStart={''}
-                    timeEnd={''} */
-                />
-                <AvailabilityDisplay 
-                    dayName={'Saturday'}
-                    isAvailable={true}
-                    /* timeStart={''}
-                    timeEnd={''} */
-                />
+                {
+                    availability.map((item, index) => {
+                        return (
+                            <AvailabilityDisplay 
+                                key={index}
+                                dayName={dayNames[index]}
+                                isAvailable={item.available}
+                                timeStart={new Date(item.timeStart.seconds * 1000)}
+                                timeEnd={new Date(item.timeEnd.seconds * 1000)}
+                            />
+                        )
+                    })
+                }
         </div>
     </div>
 

@@ -89,7 +89,7 @@ const getUserScheduleForOrg = async (userId, orgName, days) => {
 // Params: orgName = name of organization, userId = user's id
 // Return: array of dates indexed 0-6 for days of week, (0 = Sunday)
 const getUserAvailabilityForOrg = async (userId, orgName) => {
-  const availability = []
+  let availability = []
 
   try {
       const q = query(collection(db, orgName), where("uid", "==", userId));
