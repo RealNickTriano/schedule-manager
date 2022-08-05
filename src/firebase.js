@@ -15,6 +15,7 @@ import {
     collection,
     where,
     addDoc,
+    updateDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -137,7 +138,7 @@ const getUserRoleFromOrg = async (userId, orgName) => {
 
 // Creates a new organization in the database
 // Params: orgName = name of organization, userId = user's id (this will be the owner of the org)
-// Return: boolean : whethere create succeeded
+// Return: boolean : whether create succeeded
 const createNewOrg = async (userId, orgName) => {
 
   try {
@@ -160,10 +161,38 @@ const createNewOrg = async (userId, orgName) => {
   }
 }
 
+// Updates user's availability in org
+// Params: orgName = name of organization, userId = user's id, newAvailability = the user's new available schedule
+// Return: boolean : whether update succeeded
+const updateAvailabilityForUserInOrg = async (userId, orgName, newAvailability) => {
+
+  try {
+    const q = query(collection(db, orgName), where("uid", "==", userId));
+    const doc = await getDocs(q);
+    const docId = doc.docs[0].id
+    const docRef = doc(db, orgName, docId)
+    
+    await updateDoc(docRef, {
+      'availability': newAvailability
+    })
+
+    return true
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}
+
 export {
     auth,
     db,
     signInWithGoogle,
     logout,
     getUserScheduleForOrg,
+    getUserAvailabilityForOrg,
+    getUserRoleFromOrg,
+    getOrgsForUser,
+    updateAvailabilityForUserInOrg,
+    createNewOrg,
+    
 }
