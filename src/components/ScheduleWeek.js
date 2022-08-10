@@ -4,7 +4,7 @@ import { query, collection, getDocs, where } from "firebase/firestore";
 import { auth, db, getUserScheduleForOrg } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-const ScheduleWeek = ({ startDay }) => {
+const ScheduleWeek = ({ startDay, org }) => {
 
     /**
      * Takes a startDay (Sunday) and displays Day componenets for the week
@@ -32,7 +32,7 @@ const ScheduleWeek = ({ startDay }) => {
     }, [startDay])
 
     const fetchTimes = async (myDays) => {
-       const myArray = await getUserScheduleForOrg(user?.uid, 'testOrg', myDays)
+       const myArray = await getUserScheduleForOrg(user?.uid, org, myDays)
        setDetails(myArray)
     }
     

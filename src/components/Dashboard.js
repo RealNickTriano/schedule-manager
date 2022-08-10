@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { auth, db, logout } from "../firebase";
+import { auth, db, logout, getOrgsForUser } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import Navbar from "./Navbar";
 import AvailabilityCard from "./AvailabilityCard";
@@ -12,6 +12,7 @@ const Dashboard = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [photo, setPhoto] = useState("");
+    const [userOrgs, setUserOrgs] = useState([]);
 
     const navigate = useNavigate();
 
@@ -19,8 +20,15 @@ const Dashboard = () => {
         if (loading) return;
         if (!user) return navigate("/login");
         fetchUserName();
+        fetchOrgs();
 
     }, [user, loading]);
+
+    const fetchOrgs = async () => {
+        const myArray = await getOrgsForUser(user.uid)
+        setUserOrgs(myArray)
+        console.log(myArray)
+     }
 
     const fetchUserName = async () => {
         try {
@@ -41,8 +49,21 @@ const Dashboard = () => {
         <Navbar />
         <div className='flex flex-col justify-center items-center min-h-screen'>
             <h1 className="text-3xl text-indigo-600 text-center font-bold">Welcome, {name}!</h1>
-            <ScheduleCard />
-            <AvailabilityCard />
+            {
+                userOrgs.map((item, index) => {
+                    return (
+                        <div className="flex flex-col justify-center items-center">
+                            <ScheduleCard 
+                                org={item}
+                            />
+                            <AvailabilityCard 
+                                org={item}
+                            />
+                        </div>
+                    )
+                    
+                })
+            }
             
         </div>
     </>

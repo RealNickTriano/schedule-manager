@@ -106,7 +106,7 @@ const getUserAvailabilityForOrg = async (userId, orgName) => {
 // Params: userId = user's id
 // Return: array of org names
 const getOrgsForUser = async (userId) => {
-  const orgs = []
+  let orgs = []
 
   try {
       const q = query(collection(db, 'users'), where("uid", "==", userId));

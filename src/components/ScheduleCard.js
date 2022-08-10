@@ -4,7 +4,7 @@ import { FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa'
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 
-const ScheduleCard = () => {
+const ScheduleCard = ({ org }) => {
 
     const [user, loading, error] = useAuthState(auth);
     const [startDays, setStartDays] = useState(Array(3).fill(null));
@@ -74,7 +74,7 @@ const ScheduleCard = () => {
   return (
     <div className='flex flex-col justify-center items-start bg-gray-800 rounded-lg shadow-lg mt-12 pt-5'>
                 <div className='bg-indigo-600 flex justify-between items-center w-full py-2 px-5'>
-                    <h1 className='font-bold text-xl'>Your Schedule</h1>
+                    <h1 className='font-bold text-xl'>Your Schedule for {org}</h1>
                     <div className='flex justify-center items-center gap-2'>
                         <button
                             onClick={() => onArrowLeft()}
@@ -96,12 +96,15 @@ const ScheduleCard = () => {
                         style={{animationName: weekAnimation, animationDuration: '0.5s'}} 
                     >
                         <ScheduleWeek 
+                            org={org}
                             startDay={startDays[0]}
                         />
                         <ScheduleWeek 
+                            org={org}
                             startDay={startDays[1]}
                         />
                         <ScheduleWeek 
+                            org={org}
                             startDay={startDays[2]}
                         />
                     </div>
